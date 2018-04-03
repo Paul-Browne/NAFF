@@ -85,24 +85,23 @@
         var j = 0;
         if (arr) {
             j = arr.length;
-        }
-
-        while(i < j) {
-            var REG = /(\d+)?\((\D*)\)(\d+)?/g;
-            var match = REG.exec(arr[i]);
-            var suffix = match[2];
-            
-            if( ( wW > match[1] || match[1] == undefined) && ( wW <= match[3] || match[3] == undefined) ){
-                var mime = _url.lastIndexOf('.');
-                console.log(suffix);
-                if(suffix){
-                    var url = _url.substring(0, mime+1) + suffix + _url.substr(mime);
+            while(i < j) {
+                var REG = /(\d+)?\((\D*)\)(\d+)?/g;
+                var match = REG.exec(arr[i]);
+                var suffix = match[2];
+                if( ( wW > match[1] || match[1] == undefined) && ( wW <= match[3] || match[3] == undefined) ){
+                    var mime = _url.lastIndexOf('.');
+                    if(suffix){
+                        var url = _url.substring(0, mime+1) + suffix + _url.substr(mime);
+                    }
+                }else{
+                    /* possibly delete the script tag from the DOM? */
+                    return;
                 }
+                i++;
             }
-
-            i++;
-        }       
-
+        }
+   
         var _target = document.querySelector("script[nf-name=" + target + "]:not(.accounted)");
 
         _target.style.display = "block";
