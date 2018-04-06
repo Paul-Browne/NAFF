@@ -42,7 +42,7 @@ var imgPrefs = {
 // https server with gzip and http2 (only if cert and key exist)
 
 gulp.task('server', function(){
-    return fs.open('./.env', 'r', (err) => {
+    fs.open('./.env', 'r', (err) => {
         if(err){
             if (err.code === 'ENOENT') {
                 console.log('.env file not found');
