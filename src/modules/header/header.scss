@@ -3,9 +3,9 @@ nav.main {
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    height: 6rem;
+    //height: 3rem;
     img {
-        width: 7rem;
+        width: 6rem;
     }
     ul {
         display: flex;
@@ -21,7 +21,7 @@ nav.main {
             }
             a {
                 color: #000;
-                font-family: "Open sans";
+                //font-family: "Open sans";
                 font-weight: 700;
                 text-decoration: none;
                 text-transform: uppercase;
