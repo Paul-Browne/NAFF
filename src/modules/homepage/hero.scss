@@ -4,23 +4,13 @@
     align-items: center;
     justify-content: center;
 	height: calc(100vh - 68px);
+	img {
+		width: 120px;
+	}
 	h1 {
 		font-family: Roboto;
 		font-size: 6rem;
 		margin: 0;
-		span {
-			padding: 0.6rem 1.1rem;
-			display: block;
-			background: #150583;
-			color: rgba(255,255,255,0.8);
-			line-height: 1;
-			border-bottom-right-radius: 1rem;
-			border-bottom-left-radius: 0;
-			border-top-right-radius: 1rem;
-			border-top-left-radius: 1rem;
-			box-shadow: 4px 4px 0 #2608e7, 8px 8px 0 #715df9, 12px 12px 0 #c7bffd;
-			text-shadow: 4px 4px 0 rgba(255, 255, 255, 0.3), 8px 8px 0 rgba(255, 255, 255, 0.2), 12px 12px 0 rgba(255, 255, 255, 0.1);
-		}
 	}
 	p{
 		font-size: 1.25rem;

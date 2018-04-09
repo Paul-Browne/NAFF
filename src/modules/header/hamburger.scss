@@ -2,6 +2,9 @@ nav.main {
     align-items: flex-start;
     padding: 0;
     height: auto;
+    img {
+      
+    }
     ul {
         list-style-type:none;
         padding: 0;
@@ -21,7 +24,6 @@ nav.main {
                 padding: 0.5rem 0;
                 margin: 0.25rem 0;
                 color: #fff;
-                //font-family: "Open sans";
                 font-weight: 700;
                 text-decoration: none;
                 text-transform: uppercase;

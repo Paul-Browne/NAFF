@@ -29,8 +29,12 @@ require('dotenv').config();
 
 var imgPrefs = {
     pngquant: true,
-    optipng: false,
-    zopflipng: true,
+    /* 
+        disabled zopfli for now, due to 
+        color conversion to palette requested while a color isn't in palette 
+    */
+    optipng: true,
+    zopflipng: false,
     jpegRecompress: false,
     mozjpeg: true,
     guetzli: false,
