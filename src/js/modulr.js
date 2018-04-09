@@ -77,7 +77,23 @@
         }
     }
 
+/*
+    function debounce(func, wait) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                func.apply(context, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    };
+*/
+
     include = function(theUrl, target, arr) {
+
         var wW = window.innerWidth;
         var _url = theUrl;
         var url = theUrl;
