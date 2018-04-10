@@ -94,7 +94,8 @@
 
     include = function(theUrl, target, arr) {
 
-        var wW = window.innerWidth;
+        //var wW = window.innerWidth;
+        var wW = document.documentElement.getBoundingClientRect().width;
         var _url = theUrl;
         var url = theUrl;
         var i = 0;
