@@ -1,22 +1,50 @@
 <!-- <link rel="stylesheet" type="text/css" href="modules/tldr/tldr.css"> -->
-<style>.hljs-comment,.hljs-quote{color:#969896}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#c20000}.hljs-built_in,.hljs-builtin-name,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#de935f}.hljs-attr{color:#f0c674}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:#b5bd68}.hljs-section,.hljs-title{color:#81a2be}.hljs-keyword,.hljs-selector-tag{color:#b294bb}.hljs{display:block;overflow-x:auto;background:#1d1f21;color:#fff;padding:.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-tag .hljs-string,.javascript .hljs-string:nth-child(2){color:#00a9ff}
+<style>.hljs-comment,.hljs-quote{color:#969896}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable,{color:#c20000}.hljs-built_in,.hljs-builtin-name,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#de935f}.hljs-attr{color:#f0c674}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:#b5bd68}.hljs-section,.hljs-title{color:#81a2be}.hljs-keyword,.hljs-selector-tag{color:#b294bb}.hljs{display:block;overflow-x:auto;background:#1d1f21;color:#fff;padding:.5em}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-tag .hljs-string,.javascript .hljs-string:nth-child(2),.custom-highlight span{color:#00a9ff}
 </style>
 
-<pre><code class="html">&lt;!DOCTYPE html&gt;
+<pre><code class="html">
+&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
-	&lt;meta charset="utf-8"&gt;
-	&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
-	&lt;script src="js/modulr.js"&gt;&lt;/script&gt;
-	&lt;script M-name="global-head"&gt;include('modules/global-head.html', 'global-head')&lt;/script&gt;
-	&lt;script M-name="homepage-meta"&gt;include('modules/homepage/homepage-meta.html', 'homepage-meta')&lt;/script&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;script src="js/modulr.js"&gt;&lt;/script&gt;
+    &lt;script M-name="global-head"&gt;include('modules/global-head.html', 'global-head')&lt;/script&gt;
+    &lt;script M-name="homepage-meta"&gt;include('modules/homepage/homepage-meta.html', 'homepage-meta')&lt;/script&gt;
 &lt;/head&gt;
 &lt;body&gt;
-	&lt;script M-name="header"&gt;include('modules/header/header.html', 'header')&lt;/script&gt;
-	&lt;script M-name="homepage-hero"&gt;include('modules/homepage/hero.html', 'homepage-hero')&lt;/script&gt;
-	&lt;script M-lazy M-name="footer"&gt;include('modules/footer/footer.html', 'footer')&lt;/script&gt;
+    &lt;script M-name="header"&gt;include('modules/header/header.html', 'header')&lt;/script&gt;
+    &lt;script M-name="homepage-hero"&gt;include('modules/homepage/hero.html', 'homepage-hero')&lt;/script&gt;
+    &lt;script M-lazy M-name="footer"&gt;include('modules/footer/footer.html', 'footer')&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
+
 </code></pre>
+
+<h3>M-name</h3>
+<pre><code class="custom-highlight hljs">
+&lt;script <span>M-name="homepage-hero"</span>&gt;include('modules/homepage/hero.html', <span>'homepage-hero'</span>)&lt;/script&gt;
+
+</code></pre>
+
+<p>The <strong>M-name</strong> should be the same as the second argument in the include function</p>
+
+<h3>M-lazy</h3>
+<pre><code class="custom-highlight hljs">
+&lt;script <span>M-lazy="300"</span> M-name="address"&gt;include('modules/address/address.html', 'address')&lt;/script&gt;	
+&lt;script <span>M-lazy</span> M-name="footer"&gt;include('modules/footer/footer.html', 'footer')&lt;/script&gt;
+
+</code></pre>
+
+<p>Modules that include the <strong>M-lazy</strong> attribute will not be loaded until they are within the specified amout of pixels from the bottom of the screen (default 100px) a negative value can be specified which will defer loading until the top of the module is <strong>above</strong> the bottom of the screen by that value</p>
+
+<hr>
+<h3>Responsive module loading</h3>
+<pre><code class="custom-highlight hljs">
+&lt;script M-name="homepage-hero"&gt;include('modules/homepage/hero.html', 'homepage-hero', <span>["(mob)440", "440(tab)800", "800()"]</span>)&lt;/script&gt;
+
+</code></pre>
+
+
 
 <script src="js/highlight.pack.js"></script>
