@@ -22,6 +22,7 @@ var http2          = require('spdy');
 var del            = require('del');
 var opn            = require('opn');
 var useref         = require('gulp-useref');
+var styleInject    = require('gulp-style-inject');
 
 
 require('dotenv').config();
@@ -222,6 +223,18 @@ gulp.task('css', function() {
     .pipe(gulp.dest('dist'))
 })
 
+// .css to style element
+
+
+// gulp.task('style', function() {
+//   return gulp.src("src/**/*.html")
+//   .pipe(changed('dist'))
+//   .pipe(gulpIgnore(message))
+//   .pipe(styleInject())
+//   .pipe(gulp.dest("dist"))
+// })
+
+
 // js minification + uglification
 
 gulp.task('js', function() {
@@ -250,6 +263,7 @@ gulp.task('html', function() {
   return gulp.src('src/**/*.html')
   .pipe(changed('dist'))
   .pipe(gulpIgnore(message))
+  //.pipe(styleInject())
   .pipe(gulp.dest('dev'))
   .pipe(htmlmin({
     collapseWhitespace: true,
