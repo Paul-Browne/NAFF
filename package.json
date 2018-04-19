@@ -46,9 +46,7 @@
     "opn": "^5.1.0",
     "run-sequence": "^2.2.0",
     "serve-static": "^1.12.1",
-    "spdy": "^3.4.4"
-  },
-  "dependencies": {
+    "spdy": "^3.4.4",
     "gulp-style-inject": "^0.1.1"
   }
 }

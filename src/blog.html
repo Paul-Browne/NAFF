@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="js/modulr.js"></script>
+	<script M-name="global-head">include('modules/global-head.html', 'global-head')</script>
+</head>
+
+<body>
+	<script M-name="header">include('modules/header/header.html', 'header')</script>
+	<script M-name="blog" M-temp="data/speckyboy.posts.json" >include('modules/blog/blog.html', 'blog', ["()600", "600(desk)"], ["fi", "sv"])</script>
+	<script M-lazy M-name="footer">include('modules/footer/footer.html', 'footer')</script> 
+</body>
+</html>

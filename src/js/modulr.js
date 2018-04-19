@@ -18,13 +18,9 @@
 
     function replaceScriptTagWithResponse(outer, res) {
         /* json data */
-        if (outer.hasAttribute("M-data")) {
-            var jsonData = outer.getAttribute("M-data");
-            if (jsonData.indexOf("{") != -1) {
-                var dotted = doT.template(res);
-                res = dotted(JSON.parse(jsonData));
-                addAccountedClassToScripts_addContent_addNewScriptsToHead(outer, res);
-            } else {
+        if (outer.hasAttribute("M-temp")) {
+            var jsonData = outer.getAttribute("M-temp");
+            if(jsonData){
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -35,7 +31,12 @@
                 }
                 xmlhttp.open("GET", jsonData, true);
                 xmlhttp.send();
+            }else{
+                var dotted = doT.template(res);
+                res = dotted();
+                addAccountedClassToScripts_addContent_addNewScriptsToHead(outer, res);                
             }
+
         } else {
             addAccountedClassToScripts_addContent_addNewScriptsToHead(outer, res);
         }
@@ -92,38 +93,53 @@
     };
 */
 
-    include = function(theUrl, target, arr) {
+    include = function(theUrl, target, arr, lang) {
 
-        //var wW = window.innerWidth;
         var wW = document.documentElement.getBoundingClientRect().width;
-        var _url = theUrl;
         var url = theUrl;
-        var i = 0;
-        var j = 0;
-        if (arr) {
-            j = arr.length;
+        var mime = url.lastIndexOf('.');
+        if (typeof arr === 'object') {
+            var i = 0;
+            var j = arr.length;
+            var oneMatch = false;
             while(i < j) {
                 var REG = /(\d+)?\((\D*)\)(\d+)?/g;
                 var match = REG.exec(arr[i]);
                 var suffix = match[2];
                 if( ( wW > match[1] || match[1] == undefined) && ( wW <= match[3] || match[3] == undefined) ){
-                    var mime = _url.lastIndexOf('.');
+                    oneMatch = true;
                     if(suffix){
-                        var url = _url.substring(0, mime+1) + suffix + _url.substr(mime);
+                        url = url.substring(0, mime+1) + suffix + url.substr(mime);
+                    }else{
+                        url = theUrl;
                     }
-                }else{
-                    /* possibly delete the script tag from the DOM? */
-                    return;
                 }
                 i++;
             }
+            if(!oneMatch){
+                return;
+            }
         }
+
+        if(lang){
+            mime = url.lastIndexOf('.');
+            var y = 0;
+            var yy = lang.length;
+            while(y < yy){
+                var language = lang[y];
+                if(document.documentElement.lang == language){
+                    url = url.substring(0, mime+1) + language + url.substr(mime);
+                }
+                y++;
+            }
+        }
+
    
         var _target = document.querySelector("script[M-name=" + target + "]:not(.accounted)");
 
         _target.style.display = "block";
         _target.style.color = "transparent";
-        _target.style.height = "50vh";
+        _target.style.height = "100vh";
 
 
         if (_target.hasAttribute("M-lazy")) {
@@ -149,8 +165,15 @@
             var matchingAnchor = document.querySelectorAll("a[M-hash=" + _hash + "]");
             var _j = matchingAnchor.length;
             while(_j--){
+                var _z = _j;
                 matchingAnchor[_j].addEventListener("click", function checkClickedAnchor() {
-                    this.removeEventListener("click", checkClickedAnchor);
+                    while(_z--){
+                        console.log(matchingAnchor[_z]);
+                        matchingAnchor[_z].removeEventListener("click", checkClickedAnchor);
+                    }
+                    // this.removeEventListener("click", checkClickedAnchor);
+                    // TODO - remove all eventListeners if there are multiple anchors
+                    //        that load the same module
                     _request(_target, url);
                 })
             }
@@ -183,14 +206,18 @@
         xmlhttp.send();
     }
 
+    //window.storePage = {};
+
     window.addEventListener("click", function(e) {
         var _this = clickedOn(e.target);
         if (_this){
             e.preventDefault();
-        }
-        if (_this && _this.indexOf("#") == -1) {
-            fullReplace(_this);
-            history.pushState(null, null, _this);
+            // window.pageName = window.location.pathname;
+            // storePage[pageName] = document.documentElement.innerHTML;
+            if (_this.indexOf("#") == -1) {
+                fullReplace(_this);
+                history.pushState(null, null, _this);
+            }
         }
     });
 
