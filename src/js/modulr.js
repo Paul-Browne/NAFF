@@ -4,6 +4,9 @@
 /* modulr.js */
 !function() {
 
+    var _size;
+    var _lang;
+
     function _request(targ, url){
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
@@ -20,6 +23,14 @@
         /* json data */
         if (outer.hasAttribute("M-temp")) {
             var jsonData = outer.getAttribute("M-temp");
+            if(_size){
+                jsonData = jsonData.replace(/\[(.?)size(.?)\]/, "$1" + _size + "$2");
+            }
+            if(_lang){
+                jsonData = jsonData.replace(/\[(.?)lang(.?)\]/, "$1" + _lang + "$2");
+            }
+            jsonData = jsonData.replace(/\[.?(lang|size).?\]/g, "");
+
             if(jsonData){
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
@@ -93,56 +104,64 @@
     };
 */
 
-    include = function(theUrl, target, arr, lang) {
+    include = function(theUrl, target, size, lang) {
 
         var wW = document.documentElement.getBoundingClientRect().width;
         var url = theUrl;
-        var mime = url.lastIndexOf('.');
-        if (typeof arr === 'object') {
+        
+        if (typeof size === 'object') {
             var i = 0;
-            var j = arr.length;
-            var oneMatch = false;
+            var j = size.length;
+            var oneSizeMatch = false;
             while(i < j) {
                 var REG = /(\d+)?\((\D*)\)(\d+)?/g;
-                var match = REG.exec(arr[i]);
+                var match = REG.exec(size[i]);
                 var suffix = match[2];
                 if( ( wW > match[1] || match[1] == undefined) && ( wW <= match[3] || match[3] == undefined) ){
-                    oneMatch = true;
+                    oneSizeMatch = true;
                     if(suffix){
-                        url = url.substring(0, mime+1) + suffix + url.substr(mime);
-                    }else{
-                        url = theUrl;
+                        _size = suffix;
+                        url = url.replace(/\[(.?)size(.?)\]/, "$1" + suffix + "$2");
                     }
                 }
                 i++;
             }
-            if(!oneMatch){
+            if(!oneSizeMatch){
                 return;
             }
         }
 
         if(lang){
-            mime = url.lastIndexOf('.');
+            if(~window.location.search.indexOf("lang=")){
+                var urlReg = /(?:\?|&)lang=(.*?)(?:&|$)/g;
+                localStorage.setItem("language", urlReg.exec(window.location.search)[1]);
+            }
             var y = 0;
             var yy = lang.length;
             while(y < yy){
                 var language = lang[y];
-                if(document.documentElement.lang == language){
-                    url = url.substring(0, mime+1) + language + url.substr(mime);
+                if(localStorage.getItem("language") == language){
+
+                    url = url.replace(/\[(.?)lang(.?)\]/, "$1" + language + "$2");
+                    _lang = language;
                 }
                 y++;
             }
         }
 
-   
+        url = url.replace(/\[.?(lang|size).?\]/g, "");
+
         var _target = document.querySelector("script[M-name=" + target + "]:not(.accounted)");
 
         _target.style.display = "block";
         _target.style.color = "transparent";
         _target.style.height = "100vh";
+        _target.style.overflow = "hidden";
+
 
 
         if (_target.hasAttribute("M-lazy")) {
+            console.log(_target);
             var offset = _target.getAttribute("M-lazy") || 100;
             var wH = window.innerHeight;
             var ps = _target.getBoundingClientRect().top - wH - offset;
@@ -168,7 +187,6 @@
                 var _z = _j;
                 matchingAnchor[_j].addEventListener("click", function checkClickedAnchor() {
                     while(_z--){
-                        console.log(matchingAnchor[_z]);
                         matchingAnchor[_z].removeEventListener("click", checkClickedAnchor);
                     }
                     // this.removeEventListener("click", checkClickedAnchor);
@@ -188,7 +206,7 @@
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
                 document.documentElement.innerHTML = xmlhttp.responseText;
-                var addScripts = document.querySelectorAll("script:not([src$='modulr.js']):not([src$='modulr.min.js'])");
+                var addScripts = document.querySelectorAll("script:not([src*='modulr.js']):not([src*='modulr.min.js'])");
                 var _i = 0;
                 var __i = addScripts.length;
                 while(_i < __i){

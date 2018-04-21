@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html>
 
 <head>
 	<meta charset="utf-8">
@@ -10,7 +10,8 @@
 
 <body>
 	<script M-name="header">include('modules/header/header.html', 'header')</script>
-	<script M-name="blog" M-temp="data/speckyboy.posts.json" >include('modules/blog/blog.html', 'blog', ["()600", "600(desk)"], ["fi", "sv"])</script>
+	<script M-name="blog" M-temp="data/[lang/]speckyboy.posts.json" >include('modules/blog/blog[.size][.lang].html', 'blog', ["()600", "600(desk)"], ["fi", "sv"])</script>
 	<script M-lazy M-name="footer">include('modules/footer/footer.html', 'footer')</script> 
 </body>
 </html>
+

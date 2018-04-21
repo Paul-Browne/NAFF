@@ -9,10 +9,14 @@
 &lt;a <span>M-hash="address"</span> href="#"&gt;show address&lt;/a&gt;
 &lt;script <span>M-hash</span> M-name="address"&gt;include('modules/address/address.html', 'address')&lt;/script&gt;	
 
-</code></pre><p>Modules that include the <strong>M-hash</strong> attribute will not be loaded until corresponding anchor is clicked.</p><h3>M-data</h3><pre><code class="custom-highlight hljs">
-&lt;script <span>M-data="data/posts.json"</span> M-name="blog"&gt;include('modules/blog/blog.html', 'blog')&lt;/script&gt;	
+</code></pre><p>Modules that include the <strong>M-hash</strong> attribute will not be loaded until corresponding anchor is clicked.</p><h3>M-temp</h3><pre><code class="custom-highlight hljs">
+&lt;script <span>M-temp</span> M-name="blog"&gt;include('modules/blog/blog.html', 'blog')&lt;/script&gt;	
+&lt;script <span>M-temp="data/posts.json"</span> M-name="blog"&gt;include('modules/blog/blog.html', 'blog')&lt;/script&gt;	
 
-</code></pre><p>Modules that include the <strong>M-data</strong> attribute will</p><h3>Responsive module loading</h3><pre><code class="custom-highlight hljs">
-&lt;script M-name="homepage-hero"&gt;include('modules/homepage/hero.html', 'homepage-hero', <span>["(mob)440", "440(tab)800", "800()"]</span>)&lt;/script&gt;
+</code></pre><p>Modules that include the <strong>M-temp</strong> attribute will put through the <a href="http://olado.github.io/doT/index.html" target="_blank">doT.js template engine</a></p><h3>Responsive module loading</h3><pre><code class="custom-highlight hljs">
+&lt;script M-name="homepage-hero"&gt;include('modules/homepage/hero<span>[.size]</span>.html', 'homepage-hero', <span>["(mob)440", "440(tab)800", "800()"]</span>)&lt;/script&gt;
 
-</code></pre><p></p><script src="js/highlight.pack.js"></script>
+</code></pre><p>by adding <strong>[.size]</strong> or <strong>[/size]</strong> to the url of the module, and by passing an array like <strong>["(mob)440", "440(tab)800", "800()"]</strong> as an argument in the include, you can load different modules, depending on the width of the users device.</p><table><tbody><tr><td>module</td><td>screen size</td></tr><tr><td>modules/homepage/hero.mob.html</td><td>&lt;= 440px</td></tr><tr><td>modules/homepage/hero.tab.html</td><td>&gt; 440px and &lt;= 800px</td></tr><tr><td>modules/homepage/hero.html</td><td>&gt; 800px</td></tr></tbody></table><h3>Responsive module loading</h3><pre><code class="custom-highlight hljs">
+&lt;script M-name="homepage-hero"&gt;include('modules/homepage/hero<span>[.lang]</span>.html', 'homepage-hero', "", <span>["fi", "sv"]</span>)&lt;/script&gt;
+
+</code></pre><p>by adding <strong>[.lang]</strong> or <strong>[/lang]</strong> to the url of the module, and by passing an array like <strong>["fi", "sv"]</strong> as an argument in the include, you can load different modules, depending on the language passed in the url, eg <strong>?lang=fi</strong> or by setting the localStorage language variable to "fi"</p><table><tbody><tr><td>module</td><td>language</td></tr><tr><td>modules/homepage/hero.fi.html</td><td>Finnish</td></tr><tr><td>modules/homepage/hero.sv.html</td><td>Swedish</td></tr><tr><td>modules/homepage/hero.html</td><td>default (for no language)</td></tr></tbody></table><script src="js/highlight.pack.js"></script>
